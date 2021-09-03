@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.Post.belongsTo(models.User, {
+        foreignKey: {
+            allowNull: false
+        }
+      });
+      models.Post.hasMany(models.Comment);
     }
   };
   post.init({
@@ -19,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     attachment: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'post',
+    modelName: 'Post',
   });
   return post;
 };

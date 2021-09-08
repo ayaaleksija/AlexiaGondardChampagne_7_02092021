@@ -6,7 +6,7 @@ const asyncLib = require('async');
 // import de constante pour vérification de l'email
 const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-//
+// -------- SIGNUP -------- //
 exports.signup = async (req, res, next) => {
     // Paramètres généraux
     const username = req.body.username;
@@ -94,6 +94,7 @@ exports.signup = async (req, res, next) => {
         });
 };
 
+// -------- LOGIN -------- //
 exports.login = async (req, res, next) => {
     // Paramètres à récupérer
     const email = req.body.email;
@@ -129,7 +130,6 @@ exports.login = async (req, res, next) => {
                 return res.status(404).json({ error: 'utilisateur inconnu' });
             }
         },
-
         // mot de passe ok = utilisateur sélectionné
         function(userFound, resBycrypt, done) {
             if (resBycrypt) {
@@ -138,8 +138,7 @@ exports.login = async (req, res, next) => {
                 return res.status(403).json({ error: 'mot de passe incorrect' });
             }
         }
-
-        // validation de connexion avec la création du token
+    // validation de connexion avec la création du token
     ], function(userFound) {
         if (userFound) {
             return res.status(201).json({
@@ -155,3 +154,70 @@ exports.login = async (req, res, next) => {
         }
     });
 };
+
+// -------- GETONE -------- //
+exports.getOneUser = (req, res, next) => {
+    // Getting user infos linked to his id
+    models.User.findOne({
+        attributes: ['id', 'email', 'username', 'department', 'isAdmin'],
+        where: { id: req.params.id }
+    }).then((user) => {
+            res.status(201).json(user) 
+        })
+        .catch((err) => {
+        res.status(500).json({ error: 'impossible de vérifier utilisateur' });
+    });
+};
+
+
+// -------- UPDATE -------- //
+exports.updateUser = async (req, res, next) => {
+    // déclaration des paramètres nécessaires
+    const username = req.body.username;
+    const email = req.body.email;
+    const department = req.body.department;
+
+    asyncLib.waterfall([
+        // récupération de l'utilisateur dans la database
+        function(done){
+            models.User.findOne({
+                // where récupère les insfos de l'user
+                attributes: ['id'],
+                where: { id: req.params.id }
+            })
+            .then (function(userFound) {
+                // l'utilisateur est retourné, on passe à la fonction suivante
+                done(null, userFound);
+            })
+            .catch(function(err) {
+                return res.status(500).json({ error: 'impossible de vérifier utilisateur' });
+            });
+        },
+        function(userFound, done) {
+            // l'utilisateur est trouvé 
+            if(userFound) {
+                // on autorise la mise à jour des informations
+                userFound.update({
+                    username: (username ? username : userFound.username),
+                    email: (email ? email : userFound.email),
+                    department: (department ? department : userFound.department),
+                })
+                .then(function(){
+
+                    done(userFound);
+                })
+                .catch(function(err){
+                    res.status(500).json({ error: 'Mise à jour impossible' });
+                })
+            } else {
+                res.status(404).json({ error: 'Utilisateur introuvable' });
+            }
+        }
+    ], function(userFound){
+        if (userFound){
+            return res.status(201).json({ message: 'Profil mis à jour!' });
+        } else {
+            return res.status(500).json({ error: 'Mise à jour impossible' });  
+        }
+    }) 
+}

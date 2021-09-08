@@ -6,9 +6,9 @@ module.exports = (req, res, next) => {
     // vérifie que le token est identique
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
     // on conserve le token donné
-    const userId = decodedToken.userId;
+    const userId = decodedToken.id;
     // si différent du sauvegardé, une erreur est envoyé
-    if (req.body.userId && req.body.userId !== userId) {
+    if (req.body.id && req.body.id !== userId) {
       throw 'ID non valide';
     } else {
         // si identique on passe au middleware suivant (next)

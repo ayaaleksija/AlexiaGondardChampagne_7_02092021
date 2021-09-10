@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const models    = require('../models/index');
+const models = require('../models/index');
 const asyncLib = require('async');
 
 // import de constante pour vérification de l'email
@@ -34,7 +34,7 @@ exports.signup = async (req, res, next) => {
     asyncLib.waterfall([
         // vérification de l'existence de l'user
         // done car aucun argument - fonction de callback
-        function (done) { 
+        function (done) {
             models.User.findOne({
                 attributes: ['email'],
                 where: { email: email }
@@ -52,7 +52,7 @@ exports.signup = async (req, res, next) => {
             // vérifie le paramètre userFound
             if (!userFound) {
                 // on hash le mdp et le stock dans la variable bcrypt...
-                bcrypt.hash(password, 5, function (err, bcryptedPassword) { 
+                bcrypt.hash(password, 5, function (err, bcryptedPassword) {
                     // null pour continuer la waterfall, userFound nécessaire pour la suite + mot de passe hashé 
                     done(null, userFound, bcryptedPassword);
                 });
@@ -63,7 +63,7 @@ exports.signup = async (req, res, next) => {
 
         // création du nouvel utilisateur dans la database
         // récupération des variables en paramètres
-        function (userFound, bcryptedPassword, done) { 
+        function (userFound, bcryptedPassword, done) {
             // on utilise le modele User pour création
             let newUser = models.User.create({
                 email: email,
@@ -95,66 +95,30 @@ exports.signup = async (req, res, next) => {
 };
 
 // -------- LOGIN -------- //
-exports.login = async (req, res, next) => {
-    // Paramètres à récupérer
-    const email = req.body.email;
-    const password = req.body.password;
-    // on vérifie que l'utilisateur a tout complété
-    if (email == null || password == null) {
-        return res.status(400).json({ error: 'merci de compléter tous les champs' });
-    }
-    // utilisation de waterfall pour utilisation des fonctions en cascade
-    asyncLib.waterfall([
-        // vérification de l'existence de l'utilisateur
-        function(done) {
-            models.User.findOne({
-                    where: { email: email }
-                })
-                .then(function(userFound) {
-                    // on place l'argument de userFound nécessaire pour la suite
-                    done(null, userFound);
-                })
-                .catch(function(err) {
-                    return res.status(500).json({ error: 'impossible de vérifier le user' });
-                });
-        },
-        // comparaison du mot de passe
-        // on reprend l'argument userFound
-        function(userFound, done) {
-            // si utilisateur trouvé, vérification du mot de passe
-            if (userFound) {
-                bcrypt.compare(password, userFound.password, function(errBycrypt, resBycrypt) {
-                    done(null, userFound, resBycrypt);
-                });
-            } else {
-                return res.status(404).json({ error: 'utilisateur inconnu' });
+exports.login = (req, res, next) => {
+    models.User.findOne({ email: req.body.email })
+        .then(user => {
+            if (!user) {
+                return res.status(401).json({ error: 'Utilisateur non trouvé !' });
             }
-        },
-        // mot de passe ok = utilisateur sélectionné
-        function(userFound, resBycrypt, done) {
-            if (resBycrypt) {
-                done(userFound);
-            } else {
-                return res.status(403).json({ error: 'mot de passe incorrect' });
-            }
-        }
-    // validation de connexion avec la création du token
-    ], function(userFound) {
-        if (userFound) {
-            return res.status(201).json({
-              userId: userFound.id,
-              token: jwt.sign(
-                { userId: userFound._id },
-                'RANDOM_TOKEN_SECRET',
-                { expiresIn: '24h' }
-              )
-            });
-          } else {
-            return res.status(500).json({ error: 'connexion impossible' });
-        }
-    });
+            bcrypt.compare(req.body.password, user.password)
+                .then(valid => {
+                    if (!valid) {
+                        return res.status(401).json({ error: 'Mot de passe erroné !' });
+                    }
+                    res.status(200).json({
+                        userId: user.id,
+                        token: jwt.sign(
+                            { userId: user.id },
+                            'RANDOM_TOKEN_SECRET',
+                            { expiresIn: '24h' }
+                        )
+                    });
+                })
+                .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
 };
-
 
 // -------- UPDATE -------- //
 exports.updateUser = async (req, res, next) => {
@@ -165,54 +129,54 @@ exports.updateUser = async (req, res, next) => {
 
     asyncLib.waterfall([
         // récupération de l'utilisateur dans la database
-        function(done){
+        function (done) {
             models.User.findOne({
                 // where récupère les insfos de l'user
                 attributes: ['id'],
                 where: { id: req.params.id }
             })
-            .then (function(userFound) {
-                // l'utilisateur est retourné, on passe à la fonction suivante
-                done(null, userFound);
-            })
-            .catch(function(err) {
-                return res.status(500).json({ error: 'impossible de vérifier utilisateur' });
-            });
+                .then(function (userFound) {
+                    // l'utilisateur est retourné, on passe à la fonction suivante
+                    done(null, userFound);
+                })
+                .catch(function (err) {
+                    return res.status(500).json({ error: 'impossible de vérifier utilisateur' });
+                });
         },
-        function(userFound, done) {
+        function (userFound, done) {
             // l'utilisateur est trouvé 
-            if(userFound) {
+            if (userFound) {
                 // on autorise la mise à jour des informations
                 userFound.update({
                     username: (username ? username : userFound.username),
                     email: (email ? email : userFound.email),
                     department: (department ? department : userFound.department),
                 })
-                .then(function(){
+                    .then(function () {
 
-                    done(userFound);
-                })
-                .catch(function(err){
-                    res.status(500).json({ error: 'Mise à jour impossible' });
-                })
+                        done(userFound);
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({ error: 'Mise à jour impossible' });
+                    })
             } else {
                 res.status(404).json({ error: 'Utilisateur introuvable' });
             }
         }
-    ], function(userFound){
-        if (userFound){
+    ], function (userFound) {
+        if (userFound) {
             return res.status(201).json({ message: 'Profil mis à jour!' });
         } else {
-            return res.status(500).json({ error: 'Mise à jour impossible' });  
+            return res.status(500).json({ error: 'Mise à jour impossible' });
         }
-    }) 
+    })
 }
 
 // -------- DELETE -------- //
 exports.deleteUser = async (req, res, next) => {
-  models.User.destroy({
-    where: { id: req.params.id },
-  })
-    .then(() => res.status(200).json({ message: "Utilisateur supprimé" }))
-    .catch((error) => res.status(400).json({ error }));
+    models.User.destroy({
+        where: { id: req.params.id },
+    })
+        .then(() => res.status(200).json({ message: "Utilisateur supprimé" }))
+        .catch((error) => res.status(400).json({ error }));
 };

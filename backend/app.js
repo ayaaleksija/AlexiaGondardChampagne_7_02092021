@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 // -------- Importation des routes -------- //
 const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
 
 // -------- utilisation des imports -------- //
 // mise en place du framework express
@@ -32,5 +33,7 @@ app.use(bodyParser.json());
 
 // utilisation des routes crées après import
 app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
+
 
 module.exports = app;

@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const models    = require('../models');
+const models    = require('../models/index');
 const asyncLib = require('async');
 
 // import de constante pour vérification de l'email
@@ -155,20 +155,6 @@ exports.login = async (req, res, next) => {
     });
 };
 
-// -------- GETONE -------- //
-exports.getOneUser = (req, res, next) => {
-    // Getting user infos linked to his id
-    models.User.findOne({
-        attributes: ['id', 'email', 'username', 'department', 'isAdmin'],
-        where: { id: req.params.id }
-    }).then((user) => {
-            res.status(201).json(user) 
-        })
-        .catch((err) => {
-        res.status(500).json({ error: 'impossible de vérifier utilisateur' });
-    });
-};
-
 
 // -------- UPDATE -------- //
 exports.updateUser = async (req, res, next) => {
@@ -221,3 +207,12 @@ exports.updateUser = async (req, res, next) => {
         }
     }) 
 }
+
+// -------- DELETE -------- //
+exports.deleteUser = async (req, res, next) => {
+  models.User.destroy({
+    where: { id: req.params.id },
+  })
+    .then(() => res.status(200).json({ message: "Utilisateur supprimé" }))
+    .catch((error) => res.status(400).json({ error }));
+};

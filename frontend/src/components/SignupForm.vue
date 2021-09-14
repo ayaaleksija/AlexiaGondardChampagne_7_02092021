@@ -1,33 +1,74 @@
 <template>
   <div class="signup">
-    <form>
-      <label for="username">Pseudo :</label>
-      <input id="username" type="text" placeholder="Pseudo" required />
-      <label for="department">Service :</label>
-      <input id="department" type="text" placeholder="Service" required />
-      <label for="password">Mot de passe :</label>
-      <input
-        id="password"
-        type="password"
-        placeholder="Mot de passe"
-        required
-      />
-      <label for="password">Vérification du mot de passe :</label>
-      <input
-        id="password"
-        type="password"
-        placeholder="Vérifier mot de passe"
-        required
-      />
-      <label for="email">Email :</label>
-      <input id="email" type="email" placeholder="Email" required />
-      <button id="btnSignup" type="submit">M'inscrire</button>
-    </form>
+    <img alt="logo groupomania" src="../assets/icon-left-font.png" />
+
+      <v-form v-model="valid">
+        <v-container class="formSignup">
+          <v-col class="inputSignup">
+            <v-text-field
+              v-model="email" :rules="emailRule" :counter="10" label="Email" required>
+            </v-text-field>
+          </v-col>
+
+          <v-col class="inputSignup">
+            <v-text-field
+              v-model="password" :rules="passwordRules" label="Mot de passe" required>
+            </v-text-field>
+          </v-col>
+
+          <v-col class="inputSignup">
+            <v-text-field
+              v-model="passwordConfirmation" :rules="passwordRules" label=" Veuillez confirmer votre mot de passe" required>
+            </v-text-field>
+          </v-col>
+
+          <v-col class="inputSignup">
+            <v-text-field
+              v-model="username" :rules="usernameRule" :counter="10" label="Pseudo" required>
+            </v-text-field>
+          </v-col>
+
+          <v-col class="inputSignup">
+            <v-text-field
+              v-model="department" :rules="departmentRule" :counter="10" label="Service" required>
+            </v-text-field>
+          </v-col>
+
+          
+        </v-container>
+      </v-form>
+
+      
+    <v-btn class="btnSignup" @click="signup"> M'inscrire </v-btn>
+
   </div>
 </template>
 
 <script>
+export default {
+  name: 'SignupForm',
+
+};
 </script>
 
 <style lang="scss" scoped>
+.signup{
+  text-align: center;
+}
+img {
+  height: 200px;
+  width: 200px;
+}
+
+.formSignup{
+  text-align: center;
+  width: 50%;
+  v-form {
+    padding: 5px;
+    label {
+      color: rgba(0, 0, 0, 0.5);
+      margin: 10px;      
+    }
+  }
+}
 </style>

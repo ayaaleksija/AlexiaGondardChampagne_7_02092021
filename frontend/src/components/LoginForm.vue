@@ -17,7 +17,7 @@
       </v-form>
 
       
-    <v-btn class="btn" @click="login"> Me connecter </v-btn>
+    <v-btn class="btnLogin" @click="login"> Me connecter </v-btn>
 
   </div>
 </template>

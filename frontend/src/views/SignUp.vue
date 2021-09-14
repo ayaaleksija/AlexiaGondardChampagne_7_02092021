@@ -1,6 +1,9 @@
 <template>
   <div class="signup">
     <SignupForm />
+
+        <p class="loginLink">Vous avez déjà un compte? <router-link to="/login" class="routerLink">Connectez-vous</router-link></p>
+
     <Footer />
   </div>
 </template>
@@ -19,4 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.loginLink {
+  text-align: center;
+    margin: 20px;
+}
 </style>

@@ -1,20 +1,24 @@
 <template>
   <div class="login">
       <v-form v-model="valid">
-        <v-container><v-row>
-          <v-col cols="12" md="4">
+        <v-container class="formLog">
+          <v-col class="inputLog">
             <v-text-field
-              v-model="password" :rules="passwordRule" :counter="10" label="Last name" required>
+              v-model="email" :rules="emailRule" :counter="10" label="Email" required>
             </v-text-field>
           </v-col>
 
-          <v-col cols="12" md="4">
+          <v-col class="inputLog">
             <v-text-field
-              v-model="email" :rules="emailRules" label="E-mail" required>
+              v-model="password" :rules="passwordRules" label="Mot de passe" required>
             </v-text-field>
           </v-col>
-        </v-row></v-container>
+        </v-container>
       </v-form>
+
+      
+    <v-btn class="btn" @click="login"> Me connecter </v-btn>
+
   </div>
 </template>
 
@@ -27,14 +31,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-form {
-  padding: 5px;
-  label {
-    color: rgba(0, 0, 0, 0.5);
-    margin: 10px;
-  }
-  button {
-    margin: 10px;
+.formLog{
+  text-align: center;
+  width: 50%;
+  v-form {
+    padding: 5px;
+    label {
+      color: rgba(0, 0, 0, 0.5);
+      margin: 10px;      
+    }
   }
 }
 </style>

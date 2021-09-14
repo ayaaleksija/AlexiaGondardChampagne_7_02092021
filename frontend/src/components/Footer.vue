@@ -1,6 +1,6 @@
 <template>
-  <div class="footer">
-    <v-footer>
+  <div class="foot">
+    <v-footer class="justify-center footer">
       <ul>
         <li><a href="#">A propos</a></li>
         <li><a href="#">Mentions légales</a></li>
@@ -18,18 +18,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-ul {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+.footer {
+  background-color: #ea8685;
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-  li {
-    list-style-type: none;
-    padding: 20px;
+    li {
+      list-style-type: none;
+      padding: 20px;
 
-    a {
-      color: black;
-      text-decoration: none;
+      a {
+        color: black;
+        text-decoration: none;
+      }
     }
   }
 }

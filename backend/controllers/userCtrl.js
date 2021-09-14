@@ -14,6 +14,7 @@ exports.signup = async (req, res, next) => {
     const email = req.body.email;
     const department = req.body.department;
 
+    console.log(req.body);
     // vérification des paramètres obligatoires complets
     if (req.body.username == null || req.body.email == null || req.body.password == null || req.body.department == null) {
         return res.status(400).json({ error: 'Tous les champs sont obligatoires !' });

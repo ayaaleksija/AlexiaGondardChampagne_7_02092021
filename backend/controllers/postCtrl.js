@@ -1,6 +1,7 @@
+// -------- IMPORT DU MODELE -------- //
 const models = require('../models/index');
 
-
+// -------- CREATION D'UN POST -------- //
 exports.createPost = (req, res, next) => {
     console.log(res.locals.userId);
     // création du post
@@ -13,6 +14,7 @@ exports.createPost = (req, res, next) => {
         .catch((error) => res.status(400).json({ error }));
 };
 
+// -------- LISTE DE TOUS LES POSTS -------- //
 exports.getAllPost = (req, res, next) => {
     const order = req.query.order;
     models.Post.findAll({
@@ -28,6 +30,7 @@ exports.getAllPost = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
+// -------- DELETE -------- //
 exports.deletePost = (req, res, next) => {
     models.Post.destroy({
         where: {

@@ -2,7 +2,7 @@
   <div class="signup">
     <SignupForm />
 
-        <p class="loginLink">Vous avez déjà un compte? <router-link to="/login" class="routerLink">Connectez-vous</router-link></p>
+    <p class="loginLink">Vous avez déjà un compte? <router-link to="/" class="routerLink">Connectez-vous</router-link></p>
 
     <Footer />
   </div>

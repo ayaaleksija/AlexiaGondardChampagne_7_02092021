@@ -21,8 +21,8 @@ exports.signup = async (req, res, next) => {
     }
 
     // vériication de la taille de l'username OK
-    if (username.length >= 13 || username.length <= 4) {
-        return res.status(400).json({ error: 'Votre pseudo doit être compris entre 4 et 13 caractères' });
+    if (username.length >= 35 || username.length <= 2) {
+        return res.status(400).json({ error: 'Votre pseudo doit être compris entre 2 et 35 caractères' });
     }
 
     //vérification du format de l'adresse email
@@ -97,7 +97,9 @@ exports.signup = async (req, res, next) => {
 
 // -------- LOGIN -------- //
 exports.login = (req, res, next) => {
-    models.User.findOne({ email: req.body.email })
+    models.User.findOne({ 
+        where: {email: req.body.email} 
+    })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -108,7 +110,12 @@ exports.login = (req, res, next) => {
                         return res.status(401).json({ error: 'Mot de passe erroné !' });
                     }
                     res.status(200).json({
-                        userId: user.id,
+                        user: {
+                            username: user.username,
+                            email: user.email,
+                            department: user.department,
+                            isAdmin: user.isAdmin,
+                        },
                         token: jwt.sign(
                             { userId: user.id },
                             'RANDOM_TOKEN_SECRET',
@@ -176,7 +183,7 @@ exports.updateUser = async (req, res, next) => {
 // -------- DELETE -------- //
 exports.deleteUser = async (req, res, next) => {
     models.User.destroy({
-        where: { id: req.params.id },
+        where: { id: res.locals.userId },
     })
         .then(() => res.status(200).json({ message: "Utilisateur supprimé" }))
         .catch((error) => res.status(400).json({ error }));

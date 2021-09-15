@@ -14,7 +14,13 @@ const routes = [
     name: 'Signup',
     component: () => import('../views/SignUp.vue')
   },
+  {
+    path: '/wall',
+    name: 'Wall',
+    component: () => import('../views/Wall.vue')
+  },
 ]
+
 
 const router = new VueRouter({
   routes

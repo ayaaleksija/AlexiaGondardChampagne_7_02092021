@@ -1,34 +1,55 @@
 <template>
   <div class="login">
-      <v-form v-model="valid">
+      <v-form>
         <v-container class="formLog">
           <v-col class="inputLog">
             <v-text-field
-              v-model="email" :rules="emailRule" :counter="10" label="Email" required>
+              v-model="user.email" label="Email" required>
             </v-text-field>
           </v-col>
 
           <v-col class="inputLog">
             <v-text-field
-              v-model="password" :rules="passwordRules" label="Mot de passe" required>
+              v-model="user.password" label="Mot de passe" required>
             </v-text-field>
           </v-col>
+          
         </v-container>
-      </v-form>
-
-      
-    <v-btn class="btnLogin" @click="login"> Me connecter </v-btn>
-
+      </v-form>          
+      <v-btn class="btnLogin" @click="login"> Me connecter </v-btn>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'LoginForm',
-
-};
-
+	name: 'LoginForm',
+  data(){
+    return {
+      user:{
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    login() {
+      const request = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(this.user),
+      };
+      fetch("http://localhost:3000/api/auth/login/", request)
+        .then((response) => response.json())
+        .then((data) => {
+          this.$store.commit('LOGIN', data)
+          this.$router.push('Wall');
+        });
+    },
+  },
+}
 </script>
+
 
 <style lang="scss" scoped>
 .formLog{

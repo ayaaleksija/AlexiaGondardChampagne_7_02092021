@@ -2,35 +2,35 @@
   <div class="signup">
     <img alt="logo groupomania" src="../assets/icon-left-font.png" />
 
-      <v-form v-model="valid">
+      <v-form>
         <v-container class="formSignup">
           <v-col class="inputSignup">
             <v-text-field
-              v-model="email" :rules="emailRule" :counter="10" label="Email" required>
+              v-model="user.email" label="Email" required>
             </v-text-field>
           </v-col>
 
           <v-col class="inputSignup">
             <v-text-field
-              v-model="password" :rules="passwordRules" label="Mot de passe" required>
+              v-model="user.password" label="Mot de passe" required>
             </v-text-field>
           </v-col>
 
           <v-col class="inputSignup">
             <v-text-field
-              v-model="passwordConfirmation" :rules="passwordRules" label=" Veuillez confirmer votre mot de passe" required>
+              label=" Veuillez confirmer votre mot de passe" required>
             </v-text-field>
           </v-col>
 
           <v-col class="inputSignup">
             <v-text-field
-              v-model="username" :rules="usernameRule" :counter="10" label="Pseudo" required>
+              v-model="user.username" label="Username" required>
             </v-text-field>
           </v-col>
 
           <v-col class="inputSignup">
             <v-text-field
-              v-model="department" :rules="departmentRule" :counter="10" label="Service" required>
+              v-model="user.department" label="Service" required>
             </v-text-field>
           </v-col>
 
@@ -39,7 +39,7 @@
       </v-form>
 
       
-    <v-btn class="btnSignup" @click="signup"> M'inscrire </v-btn>
+    <v-btn class="btnSignup" elevation="2" @click="signup"> M'inscrire </v-btn>
 
   </div>
 </template>
@@ -48,7 +48,31 @@
 export default {
   name: 'SignupForm',
 
-};
+  data(){
+    return {
+      user:{
+        email: "",
+        password: "",
+        username: "",
+        department: "",
+      },
+    };
+  },
+  methods: {
+    signup() {
+      const request = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(this.user),
+      };
+      fetch("http://localhost:3000/api/auth/signup/", request)
+        .then((response) => response.json())
+        .then(() => {
+          this.$router.push('/');
+        });
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>

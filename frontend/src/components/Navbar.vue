@@ -1,13 +1,12 @@
 <template>
   <div class="navbar">
 
-    <v-card class="navCard" height="max">
+    <v-card class="navCard">
       <v-navigation-drawer permanent right>
         <template v-slot:prepend>
           <img alt="logo groupomania" src="../assets/icon-above-font.png" />
           <v-list-item two-line>
             <v-list-item-content>
-              
               <v-list-item-title class="navUserLog">{{ getUser.username }}</v-list-item-title>
               <v-list-item-subtitle class="navUserLog"><v-icon class="green">mdi-login</v-icon></v-list-item-subtitle>
             </v-list-item-content>
@@ -56,6 +55,7 @@ export default {
   name: "Navbar",
   computed: {
     ...mapGetters(["getUser"]),
+  
   },
   methods: {
     logout() {
@@ -69,6 +69,7 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   text-align: center;
+  max-width: 296px;
   img {
     height: 100px;
     width: 100px;

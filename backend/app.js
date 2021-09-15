@@ -3,6 +3,7 @@
 const express = require('express');
 //import de bodyParser 
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // -------- Importation des routes -------- //
 const userRoutes = require("./routes/user");
@@ -33,8 +34,10 @@ app.use((req, res, next) =>{
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(cors());
+
 // utilisation des routes crées après import
-app.use('/api/user', userRoutes);
+app.use('/api/auth', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/post/:postId/comment', commentRoutes);
 

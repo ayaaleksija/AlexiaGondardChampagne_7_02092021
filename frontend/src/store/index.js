@@ -1,20 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user:{
+    user: {
       username: '',
       email: '',
       department: '',
-      isAdmin:'',
+      isAdmin: '',
     },
-    token:''
+    token: ''
   },
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+  })],
   mutations: {
-    LOGIN(state,data){
+    LOGIN(state, data) {
       state.user.username = data.user.username
       state.user.email = data.user.email
       state.user.department = data.user.department
@@ -28,15 +32,11 @@ export default new Vuex.Store({
       state.isAdmin = "";
     },
   },
-  getters:{
-    getUser:state => state.user,
+  getters: {
+    getUser: state => state.user,
     getToken: state => state.token,
-    getAdmin: state => state.isAdmin
-
+    getAdmin: state => state.isAdmin,
   },
-  actions: {
-  
-  },
-  modules: {
-  }
+    actions: {},
+    modules: {}
 })

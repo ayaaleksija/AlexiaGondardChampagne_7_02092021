@@ -39,7 +39,7 @@ app.use(cors());
 // utilisation des routes crées après import
 app.use('/api/auth', userRoutes);
 app.use('/api/posts', postRoutes);
-app.use('/api/posts/:postId/comment', commentRoutes);
+app.use('/api/posts/:postId/comments', commentRoutes);
 
 
 

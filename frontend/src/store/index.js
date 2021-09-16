@@ -13,10 +13,6 @@ export default new Vuex.Store({
       isAdmin: "",
     },
     token: "",
-    post: {
-      UserId: "",
-      content: "",
-    },
   },
   plugins: [
     createPersistedState({
@@ -33,11 +29,8 @@ export default new Vuex.Store({
     },
     LOGOUT(state) {
       state.token = "";
-      state.username = "";
-      state.isAdmin = "";
-    },
-    CREATEPOST(state, data) {
-      state.post.content = data.post.content;
+      state.user.username = "";
+      state.user.isAdmin = "";
     },
   },
   getters: {

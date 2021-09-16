@@ -5,12 +5,9 @@
       <v-navigation-drawer permanent right>
         <template v-slot:prepend>
           <img alt="logo groupomania" src="../assets/icon-above-font.png" />
-          <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-title class="navUserLog">{{ getUser.username }}</v-list-item-title>
-              <v-list-item-subtitle class="navUserLog"><v-icon class="green">mdi-login</v-icon></v-list-item-subtitle>
             </v-list-item-content>
-          </v-list-item>
         </template>
 
         <v-divider></v-divider>
@@ -69,7 +66,7 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   text-align: center;
-  max-width: 296px;
+  max-width: 220px;
   img {
     height: 100px;
     width: 100px;

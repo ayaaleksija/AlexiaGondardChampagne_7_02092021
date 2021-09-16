@@ -15,7 +15,7 @@
                     </v-col>
                 </v-col>
             </v-container> 
-            <v-btn class="btnDelete" @click="deleteAccount"> Supprimer mon compte </v-btn>
+            <v-btn class="btnDelete" @click="deleteAccount">Supprimer mon compte<v-icon>mdi-trash-can-outline</v-icon></v-btn>
         </v-form>
     </div>
 </template>
@@ -61,7 +61,7 @@ export default {
                 alert("Votre compte a été supprimé !");
                 this.$router.push("/");
             })
-            .catch((error) => console.log("cannot delete user " + error));
+            .catch((error) => console.log("impossible d'effacer le profil " + error));
         },
     }
 };
@@ -75,7 +75,7 @@ export default {
     .form{
         flex-direction: column;
         text-align: center;
-        width: 500px;
+        width: 60%;
         .btnDelete {
             margin-bottom: 20px;
         }

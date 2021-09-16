@@ -19,7 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  background-color: #ea8685;
+  background-color: #ea8685!important;
   ul {
     display: flex;
     flex-direction: row;

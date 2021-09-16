@@ -18,7 +18,7 @@
           <v-card-actions>
             <v-list-item class="grow">
               <v-list-item-content>
-                <v-list-item-title> {{ post.User.username }}</v-list-item-title>
+                <v-list-item-text class="h6"> {{ post.User.username }}</v-list-item-text>
               </v-list-item-content>
 
               <v-row align="center" justify="end">
@@ -132,6 +132,8 @@ export default {
 }
 .postContent{
   font-size: medium;
+  font-weight: bold;
+  color: black!important;
   height: 50px;
 
 }

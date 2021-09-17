@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const commentCtrl = require('../controllers/commentCtrl');
 
 router.post('/', auth, commentCtrl.createComment);
-router.get('/', auth, commentCtrl.getAllComment);
-router.delete('/:id', auth, postCtrl.deleteComment);
+router.get('/', auth, commentCtrl.getAllComments);
+router.delete('/:id', auth, commentCtrl.deleteComment);
 
 module.exports = router;

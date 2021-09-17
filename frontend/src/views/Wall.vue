@@ -15,16 +15,27 @@
 
           <v-card-text class="postContent">{{post.content}}</v-card-text>
 
-          <v-card-actions>
+          <v-card-actions class="footerPost">
             <v-list-item class="grow">
               <v-list-item-content>
-                <v-list-item-text class="h6"> {{ post.User.username }}</v-list-item-text>
+                <p class="h6"> {{ post.User.username }}</p>
               </v-list-item-content>
-
-              <v-row align="center" justify="end">
-                <v-icon class="commentIcon">mdi-comment-text</v-icon>
-              </v-row>
-              
+                  <v-dialog transition="dialog-bottom-transition" max-width="300" max-height="150">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon class="commentIcon"  v-bind="attrs" v-on="on">mdi-comment-text</v-icon>
+                    </template>
+                    <template v-slot:default="postComment">
+                      <v-card>
+                        <v-toolbar color="#ea8685" dark>Comment Box</v-toolbar>
+                        <v-card-text>
+                          <div class="commentText pa-2">Hey salut!</div>
+                        </v-card-text>
+                        <v-card-actions class="justify-end">
+                          <v-btn text @click="postComment = false">Comment</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </template>
+                  </v-dialog>                
               <!-- <div v-for="comment in post.comments" :key="comment.id">OK</div> -->
             </v-list-item>
           </v-card-actions>
@@ -133,8 +144,14 @@ export default {
 .postContent{
   font-size: medium;
   font-weight: bold;
-  color: black!important;
+  color: black!important;;
   height: 50px;
+}
+.footerPost{
+  justify-content: space-between;
+}
 
+.commentText {
+    font-size: medium;
 }
 </style>

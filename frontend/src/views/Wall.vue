@@ -24,14 +24,20 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon class="commentIcon"  v-bind="attrs" v-on="on">mdi-comment-text</v-icon>
                     </template>
-                    <template v-slot:default="postComment">
+                    <template >
                       <v-card>
                         <v-toolbar color="#ea8685" dark>Comment Box</v-toolbar>
                         <v-card-text>
-                          <div class="commentText pa-2">Hey salut!</div>
+                            <v-container>
+                              <v-row>
+                                <v-col>
+                                  <v-text-field v-model="comment.content" :counter="200" label="Commentaire..."></v-text-field>
+                                </v-col>
+                              </v-row>
+                            </v-container>
                         </v-card-text>
                         <v-card-actions class="justify-end">
-                          <v-btn text @click="postComment = false">Comment</v-btn>
+                          <v-btn @click="postComment(post)">Comment</v-btn>
                         </v-card-actions>
                       </v-card>
                     </template>
@@ -61,10 +67,16 @@ export default {
     return {
       header: "Posts les plus récents",
       posts: [],
+      
+      comment:{
+        content: "",
+      },
+
+      comments:[],
     };
   },
   computed: {
-    ...mapGetters(["getUser"]),
+    ...mapGetters(["getUser"], ["getToken"]),
   },
   mounted (){
     const request = {
@@ -81,6 +93,25 @@ export default {
     
   },
   methods: {
+    postComment(post) {
+    const body = JSON.stringify(this.comment)
+    const request = {
+      method: "POST",
+        headers: {
+          authorization: "Bearer " + this.$store.getters.getToken,
+          "Content-Type": "application/json",
+        },
+        body: body,
+      };
+
+      fetch(
+        "http://localhost:3000/api/posts/" + post.id + "/comments", request)
+        .then((response) => response.json())
+        .then((data) => { 
+            this.comment.unshift(data.comment);
+        });
+    },
+
     // getComments(post) {
     //   const request = {
     // method: "GET",

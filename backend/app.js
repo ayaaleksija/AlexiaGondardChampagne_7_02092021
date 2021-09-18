@@ -13,11 +13,13 @@ const commentRoutes = require("./routes/comments");
 
 // -------- utilisation des imports -------- //
 // mise en place du framework express
-const app = express();
+const app = express.Router({
+    mergeParams: true
+});
 
 
 // paramétrage des entetes des requetes globales
-app.use((req, res, next) =>{
+app.use((req, res, next) => {
     // autorisaion d'accès : tout le monde
     res.setHeader('Access-Control-Allow-Origin', '*');
     // autorisation d'utilisation des entetes définies
@@ -31,7 +33,9 @@ app.use((req, res, next) =>{
 
 // mise en place de bodyParser 
 // permet de recuperer les arguments et paramètres dans les header de requetes
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 
 app.use(cors());

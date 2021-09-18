@@ -4,6 +4,7 @@ const models = require('../models/index');
 // -------- CREATION D'UN COMMENTAIRE -------- //
 exports.createComment = (req, res, next) => {
     // création d'un commentaire
+    console.log(req.params)
     models.Comment.create({
             UserId: res.locals.userId,
             postId: req.params.postId,

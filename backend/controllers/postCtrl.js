@@ -3,12 +3,15 @@ const models = require('../models/index');
 
 // -------- CREATION D'UN POST -------- //
 exports.createPost = (req, res, next) => {
-    console.log(res.locals.userId);
+    const attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    if (req.file) {
+        attachment;
+    }
     // création du post
     models.Post.create({
             UserId: res.locals.userId,
             content: req.body.content,
-            attachment: req.body.attachment,
+            attachment: attachment,
         })
         .then(() => res.status(201).json({
             message: "Post créé"

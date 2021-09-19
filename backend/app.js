@@ -4,6 +4,7 @@ const express = require('express');
 //import de bodyParser 
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require("path");
 
 // -------- Importation des routes -------- //
 const userRoutes = require("./routes/users");
@@ -37,6 +38,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(cors());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // utilisation des routes crées après import
 app.use('/api/auth', userRoutes);

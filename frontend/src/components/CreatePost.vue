@@ -1,9 +1,13 @@
 <template>
   <div class="createPost">
     <v-container>
-      <v-textarea v-model="post.content" class="content" color="black" label="Quoi de neuf...?"></v-textarea>
-      <v-btn class="btnPost" elevation="2" large @click="postContent">Publier</v-btn
-      >
+      <v-textarea v-model="post.content" class="content" color="black" label="Quoi de neuf...?"></v-textarea> 
+        <div class="attachIcon">
+        <v-row>
+          <v-file-input v-model="post.attachment" type = "file" required>mdi-camera</v-file-input>
+          <v-btn class="btnPost" elevation="2" large @click="postContent">Publier</v-btn>
+        </v-row>
+        </div>
     </v-container>
   </div>
 </template>
@@ -17,6 +21,7 @@ export default {
     return {
       post: {
         content: "",
+        attachment: ""
       },
     };
   },
@@ -54,13 +59,14 @@ export default {
   text-align: center;
   .content {
     background-color: #ea8685;
-    color: black;
+    color: black; 
     padding: 20px;
   }
 }
 .btnPost {
   margin: 20px;
 }
+
 
 @media (min-width: 320px) and (max-width: 426px) {
     .createPost{

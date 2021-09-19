@@ -14,6 +14,7 @@
           </v-card-title>
 
           <v-card-text class="postContent">{{post.content}}</v-card-text>
+          <v-img :src="post.attachment" contain max-height="200" max-width="200"></v-img>
 
           <v-card-actions class="footerPost">
             <v-list-item class="grow">
@@ -21,7 +22,6 @@
                 <p class="h6"> {{ post.User.username }}</p>
               </v-list-item-content>
               <router-link :to="{name: 'Comments', params: {PostId: post.id} }"><v-icon class="commentIcon">mdi-comment-text</v-icon></router-link>
-              <!-- <div v-for="comment in post.comments" :key="comment.id">OK</div> -->
             </v-list-item>
           </v-card-actions>
         </v-card>

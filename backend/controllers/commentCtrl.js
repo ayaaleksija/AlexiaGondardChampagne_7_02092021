@@ -32,6 +32,18 @@ exports.deleteComment = (req, res, next) => {
         }));
 }
 
+exports.getOneComment = (req, res, next) => {
+    models.Comment.findOne({
+            where: {
+                id: req.params.id
+            },
+        })
+        .then(comment => res.status(200).json(comment))
+        .catch(error => res.status(400).json({
+            error
+        }));
+}
+
 exports.getAllComments = (req, res, next) => {
     let order = req.query.order;
     models.Comment.findAll({

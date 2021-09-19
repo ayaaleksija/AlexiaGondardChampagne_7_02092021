@@ -20,28 +20,7 @@
               <v-list-item-content>
                 <p class="h6"> {{ post.User.username }}</p>
               </v-list-item-content>
-                  <v-dialog transition="dialog-bottom-transition" max-width="300" max-height="150">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon class="commentIcon"  v-bind="attrs" v-on="on">mdi-comment-text</v-icon>
-                    </template>
-                    <template >
-                      <v-card>
-                        <v-toolbar color="#ea8685" dark>Comment Box</v-toolbar>
-                        <v-card-text>
-                            <v-container>
-                              <v-row>
-                                <v-col>
-                                  <v-text-field v-model="comment.content" :counter="200" label="Commentaire..."></v-text-field>
-                                </v-col>
-                              </v-row>
-                            </v-container>
-                        </v-card-text>
-                        <v-card-actions class="justify-end">
-                          <v-btn @click="postComment(post)">Comment</v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </template>
-                  </v-dialog>                
+              <router-link :to="{name: 'Comments', params: {PostId: post.id} }"><v-icon class="commentIcon">mdi-comment-text</v-icon></router-link>
               <!-- <div v-for="comment in post.comments" :key="comment.id">OK</div> -->
             </v-list-item>
           </v-card-actions>
@@ -55,24 +34,17 @@
 import Navbar from "@/components/Navbar.vue";
 import CreatePost from "@/components/CreatePost.vue";
 import { mapGetters } from "vuex";
-
 export default {
   name: "Wall",
   components: {
     Navbar,
     CreatePost,
   },
-
   data() {
     return {
       header: "Posts les plus récents",
       posts: [],
-      
-      comment:{
-        content: "",
-      },
 
-      comments:[],
     };
   },
   computed: {
@@ -93,38 +65,6 @@ export default {
     
   },
   methods: {
-    postComment(post) {
-    const body = JSON.stringify(this.comment)
-    const request = {
-      method: "POST",
-        headers: {
-          authorization: "Bearer " + this.$store.getters.getToken,
-          "Content-Type": "application/json",
-        },
-        body: body,
-      };
-
-      fetch(
-        "http://localhost:3000/api/posts/" + post.id + "/comments", request)
-        .then((response) => response.json())
-        .then((data) => { 
-            this.comment.unshift(data.comment);
-        });
-    },
-
-    // getComments(post) {
-    //   const request = {
-    // method: "GET",
-    // headers: {
-    //   authorization: "Bearer " + this.$store.getters.getToken,
-    //   },
-    // };
-    // fetch("http://localhost:3000/api/posts/" + post.id + "/comments", request)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     post.comments = data
-    //   })
-    // },
     deletePost (postId, index) {
       const request = {
         method: "DELETE",
@@ -182,7 +122,4 @@ export default {
   justify-content: space-between;
 }
 
-.commentText {
-    font-size: medium;
-}
 </style>

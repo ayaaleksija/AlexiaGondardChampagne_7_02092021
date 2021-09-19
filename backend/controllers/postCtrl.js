@@ -18,6 +18,20 @@ exports.createPost = (req, res, next) => {
         }));
 };
 
+// -------- GET ONE POST -------- //
+
+exports.getOnePost = (req, res, next) => {
+    models.Post.findOne({
+            where: {
+                id: req.params.id
+            },
+        })
+        .then(post => res.status(200).json(post))
+        .catch(error => res.status(400).json({
+            error
+        }));
+}
+
 // -------- LISTE DE TOUS LES POSTS -------- //
 exports.getAllPost = (req, res, next) => {
     const order = req.query.order;

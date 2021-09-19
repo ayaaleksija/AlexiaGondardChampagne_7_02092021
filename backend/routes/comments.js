@@ -1,6 +1,8 @@
 // -------- Importation des packages -------- //
 const express = require('express');
-const router = express.Router();
+const router = express.Router({
+    mergeParams: true
+});
 const auth = require('../middleware/auth');
 const commentCtrl = require('../controllers/commentCtrl');
 

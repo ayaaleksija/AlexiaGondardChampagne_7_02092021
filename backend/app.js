@@ -13,9 +13,7 @@ const commentRoutes = require("./routes/comments");
 
 // -------- utilisation des imports -------- //
 // mise en place du framework express
-const app = express.Router({
-    mergeParams: true
-});
+const app = express();
 
 
 // paramétrage des entetes des requetes globales

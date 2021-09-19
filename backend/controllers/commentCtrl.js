@@ -7,7 +7,7 @@ exports.createComment = (req, res, next) => {
     console.log(req.params)
     models.Comment.create({
             UserId: res.locals.userId,
-            postId: req.params.postId,
+            PostId: req.params.postId,
             content: req.body.content,
         })
         .then(() => res.status(201).json({

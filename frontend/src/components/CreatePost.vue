@@ -49,8 +49,8 @@ export default {
 
 <style lang="scss" scoped>
 .createPost {
-  width: 70%;
-  margin: 20px;
+  width: 75%;
+  margin-top: 20px;
   text-align: center;
   .content {
     background-color: #ea8685;
@@ -60,5 +60,11 @@ export default {
 }
 .btnPost {
   margin: 20px;
+}
+
+@media (min-width: 320px) and (max-width: 426px) {
+    .createPost{
+        width: 400px;
+    }
 }
 </style>

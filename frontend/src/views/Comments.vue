@@ -28,7 +28,7 @@
                         </template>
                     </v-text-field>
                 </v-timeline-item>
-                <v-timeline-item v-for="comment in comments" :key="comment.id" class="mb-4" color="grey" icon-color="grey lighten-2" small>
+                <v-timeline-item v-for="(comment, index) in comments" :key="comment.id" class="mb-4" color="grey" icon-color="grey lighten-2" small>
                     <v-row justify="space-between">
                         <v-col> {{comment.User.username}}.</v-col>
                         <v-col> {{comment.content}}.</v-col>
@@ -153,5 +153,17 @@ export default {
 .postContent{
     font-size: large;
     font-weight: bold;
+}
+
+@media (min-width: 320px) and (max-width: 426px) {
+    .Comments{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        .post-comment{
+            width: 100%;
+        }
+    }
 }
 </style>

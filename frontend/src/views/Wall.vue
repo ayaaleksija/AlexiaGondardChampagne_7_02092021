@@ -98,7 +98,7 @@ export default {
     .card {
       margin: 20px;
       .post-card {
-        width: 300px; 
+        width: 400px; 
         height: 200px;
         img {
           height: 30px;
@@ -116,10 +116,21 @@ export default {
   font-size: medium;
   font-weight: bold;
   color: black!important;;
-  height: 50px;
+  height: 75px;
 }
-.footerPost{
+.grow{
   justify-content: space-between;
 }
 
+a {
+  text-decoration: none;
+}
+
+@media (min-width: 320px) and (max-width: 426px) {
+  .component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
 </style>

@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require("path");
+const helmet = require("helmet");
 
 // -------- Importation des routes -------- //
 const userRoutes = require("./routes/users");
@@ -38,6 +39,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(cors());
+
+app.use(helmet());
 
 app.use('/image', express.static(path.join(__dirname, 'image')));
 

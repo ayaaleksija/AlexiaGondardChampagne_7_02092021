@@ -3,7 +3,7 @@ const models = require('../models/index');
 
 // -------- CREATION D'UN POST -------- //
 exports.createPost = (req, res, next) => {
-    const attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    const attachment = `${req.protocol}://${req.get("host")}/image/${req.file.filename}`;
 
     // création du post
     models.Post.create({

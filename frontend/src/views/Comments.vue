@@ -5,9 +5,11 @@
         <v-card class="post-card" >
             <v-card-title class="title-card">
                 <span><img alt="logo groupomania" src="../assets/icon.png"/></span>
-                <v-icon class="btnAction">mdi-trash-can-outline</v-icon>
             </v-card-title>
-            <v-card-text class="postContent">{{post.content}}</v-card-text>
+            <div class="postContent">
+                <v-card-text>{{post.content}}</v-card-text>
+                <v-img :src="post.attachment" contain max-height="200" max-width="200" class="gifPost"></v-img>
+            </div>
             <v-card-actions class="footerPost">
                 <v-list-item class="grow">
                     <v-list-item-content>
@@ -137,8 +139,14 @@ export default {
     .post-comment{
         width: 70%;
         .post-card {
-            height: 150px;
+            height: 350px;
             margin:20px;
+            .postContent{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
             img {
                 height: 30px;
                 width: 30px;

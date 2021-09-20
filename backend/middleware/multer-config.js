@@ -10,7 +10,7 @@ const MIME_TYPES = {
 // utilisation de multer pour l'enregistrement des images
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, 'images');
+        callback(null, 'image');
     },
     filename: (req, file, callback) => {
         // création d'un nom pour l'image 
@@ -22,4 +22,4 @@ const storage = multer.diskStorage({
 
 module.exports = multer({
     storage: storage
-}).single('image');
+}).single('attachment');

@@ -1,10 +1,11 @@
 <template>
   <div class="createPost">
+
     <v-container>
       <v-textarea v-model="post.content" class="content" color="black" label="Quoi de neuf...?"></v-textarea> 
         <div class="attachIcon">
         <v-row>
-          <v-file-input v-model="post.attachment" type ="file"></v-file-input>
+          <v-file-input v-model="post.attachment" type ="file" accept="image/png, image/jpeg, image/bmp, image/gif"></v-file-input>
           <v-btn class="btnPost" elevation="2" large @click="postContent">Publier</v-btn>
         </v-row>
         </div>
@@ -15,11 +16,10 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "createPost",
+  name: "CreatePost",
 
   data() {
     return {
-      
       post: {
         content: "",
         attachment: [],
@@ -31,14 +31,16 @@ export default {
   },
   methods: {
     postContent() {
-      const body = JSON.stringify(this.post);
+      const newPost = new FormData();
+        newPost.append("content",this.post.content);
+        newPost.append("attachment", this.post.attachment);
+
       const request = {
         method: "POST",
         headers: {
           authorization: "Bearer " + this.$store.getters.getToken,
-          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: body,
+        body: newPost,
       };
       fetch("http://localhost:3000/api/posts", request)
         .then((response) => response.json())

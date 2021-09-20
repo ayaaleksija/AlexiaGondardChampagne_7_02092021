@@ -13,8 +13,10 @@
             <v-icon class="btnAction" v-if="getUser.username == post.User.username || getUser.isAdmin" @click="deletePost(post.id, index)">mdi-trash-can-outline</v-icon>
           </v-card-title>
 
-          <v-card-text class="postContent">{{post.content}}</v-card-text>
-          <v-img :src="post.attachment" contain max-height="200" max-width="200"></v-img>
+          <div class="postContent">
+            <v-card-text>{{post.content}}</v-card-text>
+            <v-img :src="post.attachment" contain class="gifPost"></v-img>
+          </div>
 
           <v-card-actions class="footerPost">
             <v-list-item class="grow">
@@ -98,8 +100,7 @@ export default {
     .card {
       margin: 20px;
       .post-card {
-        width: 400px; 
-        height: 200px;
+        width: 500px; 
         img {
           height: 30px;
           width: 30px;
@@ -112,20 +113,18 @@ export default {
 .title-card{
   justify-content: space-between;
 }
-.postContent{
-  font-size: medium;
-  font-weight: bold;
-  color: black!important;;
-  height: 75px;
-}
 .grow{
   justify-content: space-between;
 }
-
 a {
   text-decoration: none;
 }
-
+.postContent{
+  text-align: center;
+  .gifPost{
+   margin: 5px;
+  }
+}
 @media (min-width: 320px) and (max-width: 426px) {
   .component{
     display: flex;

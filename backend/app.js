@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/image', express.static(path.join(__dirname, 'image')));
 
 // utilisation des routes crées après import
 app.use('/api/auth', userRoutes);

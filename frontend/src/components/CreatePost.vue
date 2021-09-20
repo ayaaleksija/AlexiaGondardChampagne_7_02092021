@@ -4,7 +4,7 @@
       <v-textarea v-model="post.content" class="content" color="black" label="Quoi de neuf...?"></v-textarea> 
         <div class="attachIcon">
         <v-row>
-          <v-file-input v-model="post.attachment" type = "file" required>mdi-camera</v-file-input>
+          <v-file-input v-model="post.attachment" type ="file"></v-file-input>
           <v-btn class="btnPost" elevation="2" large @click="postContent">Publier</v-btn>
         </v-row>
         </div>
@@ -19,9 +19,10 @@ export default {
 
   data() {
     return {
+      
       post: {
         content: "",
-        attachment: ""
+        attachment: [],
       },
     };
   },
@@ -35,7 +36,7 @@ export default {
         method: "POST",
         headers: {
           authorization: "Bearer " + this.$store.getters.getToken,
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         body: body,
       };

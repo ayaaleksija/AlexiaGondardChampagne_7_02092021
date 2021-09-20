@@ -32,7 +32,7 @@
                     <v-row justify="space-between">
                         <v-col> {{comment.User.username}}.</v-col>
                         <v-col> {{comment.content}}.</v-col>
-                        <v-col><v-icon v-if="getUser.username == comment.User.username || getUser.isAdmin" @click="deleteComment(comment.id, index)" class="btnAction"> mdi-trash-can-outline </v-icon></v-col>
+                        <v-col><v-icon v-if="getUser.username == comment.User.username || getUser.isAdmin == 1" @click="deleteComment(comment.id, index)" class="btnAction"> mdi-trash-can-outline </v-icon></v-col>
                     </v-row>
                 </v-timeline-item>
             </v-timeline>

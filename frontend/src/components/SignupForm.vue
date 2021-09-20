@@ -68,6 +68,7 @@ export default {
       fetch("http://localhost:3000/api/auth/signup/", request)
         .then((response) => response.json())
         .then(() => {
+          alert('Votre compte a bien été créé!')
           this.$router.push('/');
         });
     },

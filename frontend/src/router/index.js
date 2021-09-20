@@ -24,6 +24,11 @@ const routes = [{
     component: () => import('../views/UserProfil.vue')
   },
   {
+    path: '/AllProfile',
+    name: 'AllProfile',
+    component: () => import('../views/AllProfile.vue')
+  },
+  {
     path: '/comments/:PostId',
     name: 'Comments',
     component: () => import('../views/Comments.vue')

@@ -17,72 +17,86 @@ exports.signup = async (req, res, next) => {
     console.log(req.body);
     // vérification des paramètres obligatoires complets
     if (req.body.username == null || req.body.email == null || req.body.password == null || req.body.department == null) {
-        return res.status(400).json({ error: 'Tous les champs sont obligatoires !' });
+        return res.status(400).json({
+            error: 'Tous les champs sont obligatoires !'
+        });
     }
 
     // vériication de la taille de l'username OK
     if (username.length >= 35 || username.length <= 2) {
-        return res.status(400).json({ error: 'Votre pseudo doit être compris entre 2 et 35 caractères' });
+        return res.status(400).json({
+            error: 'Votre pseudo doit être compris entre 2 et 35 caractères'
+        });
     }
 
     //vérification du format de l'adresse email
     if (!regexEmail.test(email)) {
-        return res.status(400).json({ error: 'E-mail renseigné incorrect' });
+        return res.status(400).json({
+            error: 'E-mail renseigné incorrect'
+        });
     }
 
     // vérification que l'user n'est pas déjà existant
     // utilisation de waterfall pour utilisation des fonctions en cascade
     asyncLib.waterfall([
-        // vérification de l'existence de l'user
-        // done car aucun argument - fonction de callback
-        function (done) {
-            models.User.findOne({
-                attributes: ['email'],
-                where: { email: email }
-            })
-                //userFound est le paramètre nécessaire à la fonction suivant 
-                .then(function (userFound) {
-                    done(null, userFound);
-                })
-                .catch(function (err) {
-                    return res.status(500).json({ error: 'utilisateur non trouvé' });
-                });
-        },
-        // on passe à la fonction suivante
-        function (userFound, done) {
-            // vérifie le paramètre userFound
-            if (!userFound) {
-                // on hash le mdp et le stock dans la variable bcrypt...
-                bcrypt.hash(password, 5, function (err, bcryptedPassword) {
-                    // null pour continuer la waterfall, userFound nécessaire pour la suite + mot de passe hashé 
-                    done(null, userFound, bcryptedPassword);
-                });
-            } else {
-                return res.status(409).json({ error: 'utilisateur déjà existant' });
-            }
-        },
+            // vérification de l'existence de l'user
+            // done car aucun argument - fonction de callback
+            function (done) {
+                models.User.findOne({
+                        attributes: ['email'],
+                        where: {
+                            email: email
+                        }
+                    })
+                    //userFound est le paramètre nécessaire à la fonction suivant 
+                    .then(function (userFound) {
+                        done(null, userFound);
+                    })
+                    .catch(function (err) {
+                        return res.status(500).json({
+                            error: 'utilisateur non trouvé'
+                        });
+                    });
+            },
+            // on passe à la fonction suivante
+            function (userFound, done) {
+                // vérifie le paramètre userFound
+                if (!userFound) {
+                    // on hash le mdp et le stock dans la variable bcrypt...
+                    bcrypt.hash(password, 5, function (err, bcryptedPassword) {
+                        // null pour continuer la waterfall, userFound nécessaire pour la suite + mot de passe hashé 
+                        done(null, userFound, bcryptedPassword);
+                    });
+                } else {
+                    return res.status(409).json({
+                        error: 'utilisateur déjà existant'
+                    });
+                }
+            },
 
-        // création du nouvel utilisateur dans la database
-        // récupération des variables en paramètres
-        function (userFound, bcryptedPassword, done) {
-            // on utilise le modele User pour création
-            let newUser = models.User.create({
-                email: email,
-                username: username,
-                department: department,
-                password: bcryptedPassword,
-                isAdmin: 0
-            })
-                // on ne renvoie alors que le paramètre newUser car seul paramètre nécessaire
-                .then(function (newUser) {
-                    // pas de paramètre null car waterfall terminée
-                    done(newUser);
-                })
-                .catch(function (err) {
-                    return res.status(500).json({ error: 'impossible de créer le user' });
-                });
-        }
-    ],
+            // création du nouvel utilisateur dans la database
+            // récupération des variables en paramètres
+            function (userFound, bcryptedPassword, done) {
+                // on utilise le modele User pour création
+                let newUser = models.User.create({
+                        email: email,
+                        username: username,
+                        department: department,
+                        password: bcryptedPassword,
+                        isAdmin: 0
+                    })
+                    // on ne renvoie alors que le paramètre newUser car seul paramètre nécessaire
+                    .then(function (newUser) {
+                        // pas de paramètre null car waterfall terminée
+                        done(newUser);
+                    })
+                    .catch(function (err) {
+                        return res.status(500).json({
+                            error: 'impossible de créer le user'
+                        });
+                    });
+            }
+        ],
         // dernière fonction indiquant la création du nouvel utilisateur
         function (newUser) {
             if (newUser) {
@@ -90,24 +104,32 @@ exports.signup = async (req, res, next) => {
                     'userId': newUser.id
                 });
             } else {
-                return res.status(500).json({ error: 'impossible de créer le user' });
+                return res.status(500).json({
+                    error: 'impossible de créer le user'
+                });
             }
         });
 };
 
 // -------- LOGIN -------- //
 exports.login = (req, res, next) => {
-    models.User.findOne({ 
-        where: {email: req.body.email} 
-    })
+    models.User.findOne({
+            where: {
+                email: req.body.email
+            }
+        })
         .then(user => {
             if (!user) {
-                return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+                return res.status(401).json({
+                    error: 'Utilisateur non trouvé !'
+                });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        return res.status(401).json({ error: 'Mot de passe erroné !' });
+                        return res.status(401).json({
+                            error: 'Mot de passe erroné !'
+                        });
                     }
                     res.status(200).json({
                         user: {
@@ -116,16 +138,22 @@ exports.login = (req, res, next) => {
                             department: user.department,
                             isAdmin: user.isAdmin,
                         },
-                        token: jwt.sign(
-                            { userId: user.id },
-                            'RANDOM_TOKEN_SECRET',
-                            { expiresIn: '24h' }
+                        token: jwt.sign({
+                                userId: user.id
+                            },
+                            'RANDOM_TOKEN_SECRET', {
+                                expiresIn: '24h'
+                            }
                         )
                     });
                 })
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => res.status(500).json({
+                    error
+                }));
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => res.status(500).json({
+            error
+        }));
 };
 
 // -------- UPDATE -------- //
@@ -139,16 +167,20 @@ exports.updateUser = async (req, res, next) => {
         // récupération de l'utilisateur dans la database
         function (done) {
             models.User.findOne({
-                // where récupère les insfos de l'user
-                attributes: ['id'],
-                where: { id: req.params.id }
-            })
+                    // where récupère les insfos de l'user
+                    attributes: ['id'],
+                    where: {
+                        id: req.params.id
+                    }
+                })
                 .then(function (userFound) {
                     // l'utilisateur est retourné, on passe à la fonction suivante
                     done(null, userFound);
                 })
                 .catch(function (err) {
-                    return res.status(500).json({ error: 'impossible de vérifier utilisateur' });
+                    return res.status(500).json({
+                        error: 'impossible de vérifier utilisateur'
+                    });
                 });
         },
         function (userFound, done) {
@@ -156,35 +188,79 @@ exports.updateUser = async (req, res, next) => {
             if (userFound) {
                 // on autorise la mise à jour des informations
                 userFound.update({
-                    username: (username ? username : userFound.username),
-                    email: (email ? email : userFound.email),
-                    department: (department ? department : userFound.department),
-                })
+                        username: (username ? username : userFound.username),
+                        email: (email ? email : userFound.email),
+                        department: (department ? department : userFound.department),
+                    })
                     .then(function () {
 
                         done(userFound);
                     })
                     .catch(function (err) {
-                        res.status(500).json({ error: 'Mise à jour impossible' });
+                        res.status(500).json({
+                            error: 'Mise à jour impossible'
+                        });
                     })
             } else {
-                res.status(404).json({ error: 'Utilisateur introuvable' });
+                res.status(404).json({
+                    error: 'Utilisateur introuvable'
+                });
             }
         }
     ], function (userFound) {
         if (userFound) {
-            return res.status(201).json({ message: 'Profil mis à jour!' });
+            return res.status(201).json({
+                message: 'Profil mis à jour!'
+            });
         } else {
-            return res.status(500).json({ error: 'Mise à jour impossible' });
+            return res.status(500).json({
+                error: 'Mise à jour impossible'
+            });
         }
     })
+};
+
+// -------- GET ONE -------- //
+exports.getOneUser = (req, res, next) => {
+    models.User.findOne({
+            _id: req.params.id
+        })
+        .then((user) => {
+            res.status(200).json(user)
+        })
+        .catch((error) => {
+            res.status(404).json({
+                error
+            })
+        });
 }
+
+
+
+// -------- GET ALL -------- //
+exports.getAllUser = (req, res, next) => {
+    models.User.findAll()
+        .then((users) => {
+            res.status(200).json(users)
+        })
+        .catch((error) => {
+            res.status(404).json({
+                error
+            })
+        });
+};
 
 // -------- DELETE -------- //
 exports.deleteUser = async (req, res, next) => {
     models.User.destroy({
-        where: { id: res.locals.userId },
-    })
-        .then(() => res.status(200).json({ message: "Utilisateur supprimé" }))
-        .catch((error) => res.status(400).json({ error }));
+            where: {
+                id: res.locals.userId
+            },
+        })
+        .then(() => res.status(200).json({
+            message: "Utilisateur supprimé"
+        }))
+        .catch((error) => res.status(400).json({
+            error
+        }));
 };

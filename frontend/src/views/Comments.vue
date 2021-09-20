@@ -128,7 +128,7 @@ export default {
                 authorization: "Bearer " + this.$store.getters.getToken,
             },
         };
-        fetch("http://localhost:3000/api/posts/" + commentId, request )
+        fetch("http://localhost:3000/api/posts/" + this.$route.params.PostId + "/comments/" + commentId, request )
             .then(() => {
             this.comments.splice(index, 1)
         })

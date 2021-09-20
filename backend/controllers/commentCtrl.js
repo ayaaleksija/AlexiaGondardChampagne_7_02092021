@@ -19,17 +19,30 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.deleteComment = (req, res, next) => {
-    models.Comment.destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(() => res.status(200).json({
-            message: "Commentaire supprimé !"
-        }))
-        .catch((error) => res.status(400).json({
-            error
-        }));
+    if (!res.locals.isAdmin) {
+        models.Comment.destroy({
+                where: {
+                    id: req.params.id,
+                    UserId: res.locals.userId
+                }
+            })
+            .then(() => res.status(200).json({
+                message: 'Commentaire supprimé !'
+            }))
+        //   .catch((error) => res.status(400).json({ error }));
+    } else {
+        models.Comment.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(() => res.status(200).json({
+                message: 'Commentaire supprimé !'
+            }))
+            .catch((error) => res.status(400).json({
+                error
+            }));
+    }
 }
 
 exports.getOneComment = (req, res, next) => {

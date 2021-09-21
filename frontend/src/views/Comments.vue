@@ -24,7 +24,7 @@
                     <template v-slot:icon>
                         <span></span>
                     </template>
-                    <v-text-field v-model="comment.content" :rules="contentRules" hide-details flat label="Postez un commentaire..." solo @keydown.enter="comment">
+                    <v-text-field v-model="comment.content" :rules="commentRules" hide-details flat label="Postez un commentaire..." solo @keydown.enter="comment">
                         <template v-slot:append>
                             <v-btn class="mx-0" depressed @click="postComment">Comment</v-btn>
                         </template>
@@ -62,14 +62,13 @@ export default {
             comment:{
                 content: "",
             },
-            comments: [],
-
-            contentRules: [
-                (v) => !!v || "Votre post ne peut être vide",
+            commentRules: [
+                (v) => !!v || "Votre commentaire ne peut être vide",
                 (v) =>
                 v.length <= 140 ||
                 "Votre post doit comporter moins de 140 caractères",
             ],
+            comments: [],
         };
     },
     computed: {

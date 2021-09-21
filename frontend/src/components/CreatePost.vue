@@ -25,7 +25,6 @@ export default {
         attachment: [],
       },
       contentRules: [
-        (v) => !!v || "Votre post ne peut être vide",
         (v) =>
           v.length <= 140 ||
           "Votre post doit comporter moins de 140 caractères",

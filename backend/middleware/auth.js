@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     // vérifie que le token est identique
-    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+    const decodedToken = jwt.verify(token, process.env.DB_TOKEN);
     // on conserve le token donné
     const userId = decodedToken.userId;
     res.locals.userId = userId;
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
     if (req.body.id && req.body.id !== userId) {
       throw 'ID non valide';
     } else {
-        // si identique on passe au middleware suivant (next)
+      // si identique on passe au middleware suivant (next)
       next();
     }
   } catch {

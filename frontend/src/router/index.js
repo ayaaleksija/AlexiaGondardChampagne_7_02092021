@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import store from '../store'
 
 Vue.use(VueRouter)
-const isLog = (to, from, next) => {
+const isLogged = (to, from, next) => {
   if (store.getters.getToken) {
     next()
     return;
@@ -25,25 +25,25 @@ const routes = [{
     path: '/wall',
     name: 'Wall',
     component: () => import('../views/Wall.vue'),
-    beforeEnter: isLog,
+    beforeEnter: isLogged,
   },
   {
     path: '/myProfile',
     name: 'UserProfil',
     component: () => import('../views/UserProfil.vue'),
-    beforeEnter: isLog,
+    beforeEnter: isLogged,
   },
   {
     path: '/AllProfile',
     name: 'AllProfile',
     component: () => import('../views/AllProfile.vue'),
-    beforeEnter: isLog,
+    beforeEnter: isLogged,
   },
   {
     path: '/comments/:PostId',
     name: 'Comments',
     component: () => import('../views/Comments.vue'),
-    beforeEnter: isLog,
+    beforeEnter: isLogged,
   },
 
 ]

@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const models = require('../models/index');
 const asyncLib = require('async');
+require('dotenv').config();
+
 
 // import de constante pour vérification de l'email
 const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -141,8 +143,8 @@ exports.login = (req, res, next) => {
                         token: jwt.sign({
                                 userId: user.id
                             },
-                            'RANDOM_TOKEN_SECRET', {
-                                expiresIn: '24h'
+                            process.env.DB_TOKEN, {
+                                expiresIn: '12h'
                             }
                         )
                     });

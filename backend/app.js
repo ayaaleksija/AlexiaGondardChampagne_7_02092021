@@ -8,7 +8,6 @@ const cors = require('cors');
 // utilisation de path pour accéder au chemins des fichiers
 const path = require("path");
 const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
 
 // -------- Importation des routes -------- //
 const userRoutes = require("./routes/users");
@@ -46,8 +45,6 @@ app.use(cors());
 // sécurisation des entetes requetes
 app.use(helmet());
 
-// limitatation des demandes répétées aux API
-app.use(rateLimit());
 
 app.use('/image', express.static(path.join(__dirname, 'image')));
 

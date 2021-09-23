@@ -1,2 +1,8 @@
-# ayaaleksija-AlexiaGondardChampagne_7_02092021
-Projet 7 - Créer un réseau social d'entreprise
+# GROUPOMANIA - Projet OpenClassroom n°7 
+
+---
+
+## Créer un réseau social d'entreprise
+
+--
+

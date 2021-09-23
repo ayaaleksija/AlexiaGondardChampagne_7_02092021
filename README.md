@@ -1,6 +1,7 @@
-# GROUPOMANIA - Projet OpenClassroom n°7 
-
+# GROUPOMANIA 
 ## Créer un réseau social d'entreprise
+### Projet OpenClassroom n°7
+--------------
 
 
 

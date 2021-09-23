@@ -22,3 +22,32 @@
     ```
     npm install 
     ```
+
+* puis lancer le projet en éxécutant la commande :
+  
+    ```
+    npm run serve 
+    ```
+
+#### BACKEND
+---
+* Ouvrir le dossier Backend dans un second terminal de votre éditeur puis exécuter la commande:
+  
+    ```
+    npm install 
+    ```
+
+* puis lancer le serveur en éxécutant la commande :
+  
+    ```
+    node serve 
+    ```
+    ou 
+    ```
+    nodemon serve 
+    ```
+    ou
+    ```
+    npm start 
+    ```
+

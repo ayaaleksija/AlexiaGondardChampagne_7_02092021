@@ -6,7 +6,7 @@
         <template v-slot:prepend>
           <img alt="logo groupomania" src="../assets/icon-above-font.png" />
             <v-list-item-content>
-              <v-list-item-title class="navUserLog">{{ getUser.username }}</v-list-item-title>
+              <v-list-item-title class="navUserLog"><v-icon>mdi-account</v-icon> {{ getUser.username }}</v-list-item-title>
             </v-list-item-content>
         </template>
 

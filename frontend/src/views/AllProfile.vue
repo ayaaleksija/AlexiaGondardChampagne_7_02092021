@@ -3,7 +3,7 @@
         <Navbar />
         <li class="listUserCard" v-for="user in users" :key="user.id">
         <v-card class="userCard">
-            <v-card-title class="text-h5">{{user.username}}</v-card-title>
+            <v-card-title class="text-h5"><v-icon>mdi-account</v-icon> {{user.username}}</v-card-title>
             <v-card-subtitle>{{user.department}}</v-card-subtitle>
         </v-card>
         </li>

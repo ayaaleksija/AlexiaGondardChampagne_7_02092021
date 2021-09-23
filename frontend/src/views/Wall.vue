@@ -21,7 +21,7 @@
           <v-card-actions class="footerPost">
             <v-list-item class="grow">
               <v-list-item-content>
-                <p class="h6"> {{ post.User.username }}</p>
+                <p class="h6"><v-icon>mdi-account</v-icon> {{ post.User.username }}</p>
               </v-list-item-content>
               <router-link :to="{name: 'Comments', params: {PostId: post.id} }"><v-icon class="commentIcon">mdi-comment-text</v-icon></router-link>
             </v-list-item>

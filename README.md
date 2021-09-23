@@ -4,7 +4,7 @@
 --------------
 
  1. **MISSION & COMPETENCES**
-----
+------
 
 * Personnaliser le contenu envoyé à un client web
 * Authentifier un utilisateur et maintenir sa session
@@ -12,8 +12,11 @@
 * Implémenter un stockage de données sécurisé en utilisant SQL
 --------
 
-1. **INSTALLATION**
-----
+2. **INSTALLATION**
+------
 
 #### FRONTEND
 ---
+* Ouvrir le dossier Frontend dans le terminal de votre éditeur puis exécuter la commande:
+  
+```npm install ```

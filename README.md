@@ -19,4 +19,6 @@
 ---
 * Ouvrir le dossier Frontend dans le terminal de votre éditeur puis exécuter la commande:
   
-```npm install ```
+    ```
+    npm install 
+    ```

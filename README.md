@@ -3,7 +3,7 @@
 #### *Projet OpenClassroom n°7*
 --------------
 
- 1. **MISSION & COMPETENCES**
+## 1. **MISSION & COMPETENCES**
 ------
 
 * Personnaliser le contenu envoyé à un client web
@@ -12,7 +12,7 @@
 * Implémenter un stockage de données sécurisé en utilisant SQL
 --------
 
-2. **INSTALLATION**
+## 2. **INSTALLATION**
 ------
 
 #### FRONTEND

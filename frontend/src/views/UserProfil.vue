@@ -56,7 +56,7 @@ export default {
             authorization: "Bearer " + this.$store.getters.getToken,
             },
         };
-        fetch("http://localhost:3000/api/auth/", request)
+        fetch("http://localhost:3000/api/auth/" + this.getUser.id, request)
             .then(() => {
                 alert("Votre compte a été supprimé !");
                 this.$router.push("/");

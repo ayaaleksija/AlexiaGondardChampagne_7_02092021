@@ -5,13 +5,13 @@
             <v-container>
                 <v-col class="formValue">
                     <v-col>
-                        <v-text-field v-model="user.username" outlined disabled></v-text-field>
+                        <v-text-field v-model="user.username" label="Username" disabled></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-text-field v-model="user.email" outlined disabled></v-text-field>
+                        <v-text-field v-model="user.email" label="Email" disabled></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-text-field v-model="user.department" outlined disabled></v-text-field>
+                        <v-text-field v-model="user.department" label="Service" disabled></v-text-field>
                     </v-col>
                 </v-col>
             </v-container> 

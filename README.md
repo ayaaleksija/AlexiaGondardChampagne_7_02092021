@@ -49,13 +49,11 @@
     npm start 
     ```
 
-#### BACKEND
+#### BASE DE DONNEES
 ---
-Utiliser un serveur de Base de Données type MAMP/XAMPP + Workbench pour visualiser et lier les modèles de tables
+Vérifiez que vous avez bien installé MySQL et exécutez les commandes suivantes :
 
-Créer les 3 bases de données nécessaires :
--> groupomania_test / groupomania_developement / groupomania_production
+Créez la base de données en entrant npx sequelize-cli db:create
 
-Utiliser Sequelize pour créer les tables directement via Node.JS:
--> sequelize db:create
--> sequelize db:migrate
+Migrez les tables nécessaires npx sequelize-cli db:migrate
+

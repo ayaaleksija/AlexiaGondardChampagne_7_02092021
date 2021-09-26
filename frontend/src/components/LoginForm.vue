@@ -10,7 +10,7 @@
 
           <v-col class="inputLog">
             <v-text-field
-              v-model="user.password" label="Mot de passe" required>
+              v-model="user.password" type= "password" label="Mot de passe" required>
             </v-text-field>
           </v-col>
           

@@ -12,13 +12,13 @@
 
           <v-col class="inputSignup">
             <v-text-field
-              v-model="user.password" label="Mot de passe" required>
+              v-model="user.password" type= "password" label="Mot de passe" required>
             </v-text-field>
           </v-col>
 
           <v-col class="inputSignup">
             <v-text-field
-              label=" Veuillez confirmer votre mot de passe" required>
+              type= "password" label=" Veuillez confirmer votre mot de passe" required>
             </v-text-field>
           </v-col>
 
